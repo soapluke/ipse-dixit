@@ -1,5 +1,5 @@
 const express = require('express');
-require('./db/authenticate');
+require('./db/index.js');
 
 const app = express();
 const port = process.env.PORT || 5000;
