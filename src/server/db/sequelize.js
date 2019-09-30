@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const UserModel = require('../db/models/user');
+const UserModel = require('./models/user');
 
 const path = 'mysql://root:root@localhost:8889/ipse-dixit';
 const sequelize = new Sequelize(path);
@@ -16,8 +16,8 @@ sequelize.authenticate().then(() => {
 const User = UserModel(sequelize, Sequelize);
 
 sequelize.sync({ force: false })
-  .then(() => {
-console.log(`Database & tables created here!`)
+  .then(() => { 
+    console.log(`Database & tables created here!`)
 })
 
 module.exports = User;
