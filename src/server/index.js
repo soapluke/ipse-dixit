@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser')
+const uuid = require('uuid');
 
-const { User } = require('./db/sequelize.js');
+const User = require('./db/sequelize');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,8 +18,10 @@ app.get('/test', (req, res) => {
 })
 
 app.post('/users', async (req, res) => {
+    console.log(req.body)
     try {
         const user = await User.create({
+            id: uuid(),
             name: req.body.name,
             email: req.body.email,
             password: req.body.password
