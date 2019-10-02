@@ -1,7 +1,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const User = require('../db/sequelize');
-const { jwtOptions } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
