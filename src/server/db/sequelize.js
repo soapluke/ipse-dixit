@@ -9,9 +9,7 @@ sequelize.authenticate().then(() => {
   console.log('DB connection established successfully.');
 }).catch(err => {
   console.error('Unable to connect to the database:', err);
-})/* .finally(() => {
-  sequelize.close();
-}); */
+});
 
 const User = UserModel(sequelize, Sequelize);
 
