@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, type) => {
     const User = sequelize.define('user', {
@@ -6,8 +6,9 @@ module.exports = (sequelize, type) => {
             type: type.UUID,
             primaryKey: true
         },
-        name: {
+        username: {
             type: type.STRING,
+            unique: true,
             allowNull: false
         },
         email: {
@@ -35,8 +36,26 @@ module.exports = (sequelize, type) => {
     });
 
     User.beforeCreate(async (user, options) => {
-        user.password = await bcrypt.hash(user.password, 8)
+        user.password = await bcrypt.hash(user.password, 8);
     });
+
+    User.findByCredentials = async (username, password) => {
+        const user = await User.findOne({
+            where: { username }
+        });
+
+        if (!user) {
+            throw new Error('Unable to login.');
+        };
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            throw new Error('Unable to login.');
+        };
+    
+        return user;
+    }
 
     return User;
 }
