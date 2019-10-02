@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, type) => {
     const User = sequelize.define('user', {
@@ -32,6 +33,9 @@ module.exports = (sequelize, type) => {
                     throw new Error("Password cannot contain phrase 'password'.")
                 }
             }
+        },
+        token: {
+            type: type.STRING,
         }
     });
 
@@ -55,7 +59,20 @@ module.exports = (sequelize, type) => {
         };
     
         return user;
-    }
+    };
+
+    User.generateAuthToken = async function (username) {
+        const user = await User.findOne({
+            where: { username }
+        });
+
+        let payload = { id: user.id };
+        let token = jwt.sign(payload, 'tokenkey');
+        user.token = token
+        await user.save()
+
+        return token
+    };
 
     return User;
 }
