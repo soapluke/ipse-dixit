@@ -33,9 +33,12 @@ router.post('/users/login', async (req, res) => {
 
 // Logout user
 router.post('/users/logout', auth, async (req, res) => {
+    //console.log(req.user)
     try {
         
-        req.user.tokens = []
+        await req.user.update({
+            token: null
+        })
 
         await req.user.save()
         res.send({ msg: 'Logged out successfully!'})
