@@ -33,7 +33,6 @@ router.post('/users/login', async (req, res) => {
 
 // Logout user
 router.post('/users/logout', auth, async (req, res) => {
-    //console.log(req.user)
     try {
         
         await req.user.update({

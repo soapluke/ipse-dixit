@@ -67,7 +67,7 @@ module.exports = (sequelize, type) => {
         });
 
         let payload = { id: user.id };
-        let token = jwt.sign(payload, 'tokenkey');
+        let token = jwt.sign(payload, process.env.TOKEN);
         user.token = token
         await user.save()
 

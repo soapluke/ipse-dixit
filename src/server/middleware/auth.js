@@ -4,7 +4,7 @@ const User = require('../db/sequelize');
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, 'tokenkey');
+        const decoded = jwt.verify(token, process.env.TOKEN);
 
         const user = await User.findOne({
             where: { id: decoded.id, token }
@@ -13,8 +13,6 @@ const auth = async (req, res, next) => {
         if (!user) {
             throw new Error()
         }
-
-        //console.log(user)
 
         req.token = token;
         req.user = user;
