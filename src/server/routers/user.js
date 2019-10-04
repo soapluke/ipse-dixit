@@ -16,7 +16,7 @@ router.post('/users', async (req, res) => {
         })
         res.status(201).send(user)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send()
     }
 });
 
@@ -27,9 +27,22 @@ router.post('/users/login', async (req, res) => {
         await User.generateAuthToken(req.body.username);
         res.status(201).send({msg: 'Logged in successfully!', user })
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send()
     }
-})
+});
+
+// Logout user
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        
+        req.user.tokens = []
+
+        await req.user.save()
+        res.send({ msg: 'Logged out successfully!'})
+    } catch (error) {
+        res.status(500).send()
+    }
+});
 
 // Delete user by id
 router.delete('/users/:id', async (req, res) => {

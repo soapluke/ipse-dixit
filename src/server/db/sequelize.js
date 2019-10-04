@@ -2,8 +2,7 @@ const Sequelize = require('sequelize');
 
 const UserModel = require('./models/user');
 
-const path = 'mysql://root:root@localhost:8889/ipse-dixit';
-const sequelize = new Sequelize(path);
+const sequelize = new Sequelize(process.env.DB_PATH);
 
 sequelize.authenticate().then(() => {
   console.log('DB connection established successfully.');

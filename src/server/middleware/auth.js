@@ -5,18 +5,20 @@ const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, 'tokenkey');
-        const user = await User.findOne({ id: decoded.id, token });
-
+        const user = await User.findOne({
+            where: { id: decoded.id, token }
+        });
+        
         if (!user) {
             throw new Error()
         }
 
-        req.token = token
-        req.user = user
-        next()
+        req.token = token;
+        req.user = user;
+        next();
     } catch (error) {
-        res.status(401).send({ error: 'Please authenticate.' })
+        res.status(401).send({ error: 'Please authenticate.' });
     }
 }
 
-module.exports = auth
+module.exports = auth;
