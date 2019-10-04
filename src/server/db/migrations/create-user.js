@@ -30,6 +30,9 @@ module.exports = {
                     throw new Error("Password cannot contain phrase 'password'.")
                 }
             }
+        },
+        token: {
+            type: Sequelize.STRING,
         }
       })
     },
