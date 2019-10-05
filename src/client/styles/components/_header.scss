@@ -3,7 +3,7 @@
 }
 
 .header__title {
-    color: $light-blue;
+    color: $off-white;
     text-decoration: none;
     h1 {
         margin: 0;
@@ -14,5 +14,10 @@
     align-items: center;
     padding: $s-size 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.header__buttons {
+    margin-left: auto;
 }
