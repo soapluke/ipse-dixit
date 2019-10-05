@@ -10,8 +10,8 @@ const Header = () => {
                         <h1 className="header__logo">Ipse Dixit</h1>
                     </Link>
                     <div className="header__buttons">
-                        <button>Login</button>
-                        <button>Register</button>
+                        <button className="button">Login</button>
+                        <button className="button">Register</button>
                     </div>
                     
                 </div> 
