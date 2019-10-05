@@ -5,6 +5,7 @@ module.exports = (sequelize, type) => {
     const User = sequelize.define('user', {
         id: {
             type: type.UUID,
+            allowNull: false,
             primaryKey: true
         },
         username: {
@@ -72,6 +73,10 @@ module.exports = (sequelize, type) => {
         await user.save()
 
         return token
+    };
+
+    User.associate = (models) => {
+        User.hasMany(models.Post, { as: 'posts' })
     };
 
     return User;
