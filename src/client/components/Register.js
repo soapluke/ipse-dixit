@@ -21,22 +21,32 @@ const Register = () => (
                 confirmPassword: Yup.string()
                     .oneOf([Yup.ref('password'), null], 'Passwords must match.')
             })}
-            onSubmit={(values, { setSubmitting }) => {
-                console.log(values.username)
-                client.User.create({
-                    body: {
-                        username: values.username,
-                        email: values.email,
-                        password: values.password
-                    }
-                }).then(res => console.log(res));
-                setSubmitting(false);
+            onSubmit={ async (values, actions) => {
+                try {
+                    await client.User.create({
+                        body: {
+                            username: values.username,
+                            email: values.email,
+                            password: values.password
+                        }
+                    })
+                } catch (error) {
+                    console.log(JSON.parse(error.responseData));
+                    let errorString = JSON.parse(error.responseData).errors[0].message
+                    actions.setStatus({
+                        username: errorString.includes('username') ? 'Username must be uniqe.' : '',
+                        email: errorString.includes('email') ? 'This email already exists.' : '',
+                        password: errorString.includes('password') ? errorString : '',
+                    });
+                }
+                
             }}
         >
         {({
             values,
             errors,
             touched,
+            status,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -54,7 +64,11 @@ const Register = () => (
                         errors.username && touched.username ? 'error' : ''
                     }
                 />
-                <ErrorMessage name="username" render={msg => <div className="error-msg">{msg}</div>} />
+                {status && status.username ? (
+                    <div className="error-msg">{status.username}</div>
+                  ) : (
+                    errors.username && <div className="error-msg">{errors.username}</div>
+                )}
                 <input
                     type="email"
                     name="email"
@@ -66,7 +80,11 @@ const Register = () => (
                         errors.email && touched.email ? 'error' : ''
                     }
                 />
-                <ErrorMessage name="email" render={msg => <div className="error-msg">{msg}</div>} />
+                {status && status.email ? (
+                    <div className="error-msg">{status.email}</div>
+                  ) : (
+                    errors.email && <div className="error-msg">{errors.email}</div>
+                )}
                 <input
                     type="password"
                     name="password"
@@ -78,7 +96,11 @@ const Register = () => (
                         errors.password && touched.password ? 'error' : ''
                     }
                 />
-                <ErrorMessage name="password" render={msg => <div className="error-msg">{msg}</div>} />
+                {status && status.password ? (
+                    <div className="error-msg">{status.password}</div>
+                  ) : (
+                    errors.password && <div className="error-msg">{errors.password}</div>
+                )}
                 <input
                     type="password"
                     name="confirmPassword"

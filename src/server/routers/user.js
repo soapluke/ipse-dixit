@@ -7,6 +7,7 @@ const router = express.Router()
 
 // Create user
 router.post('/users/create', async (req, res) => {
+    console.log(req)
     try {
         const user = await User.create({
             id: uuid(),
@@ -16,7 +17,7 @@ router.post('/users/create', async (req, res) => {
         })
         res.status(201).send(user)
     } catch (error) {
-        res.status(400).send()
+        res.status(400).send(error)
         console.log(error)
     }
 });

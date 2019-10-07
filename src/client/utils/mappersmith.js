@@ -1,7 +1,9 @@
 import forge from 'mappersmith';
+import EncodeJson from 'mappersmith/middleware/encode-json'
 
 const client = forge({
     host: 'http://localhost:5000',
+    middleware: [ EncodeJson ],
     resources: {
       User: {
         create: { method: 'post', path: '/users/create' },
