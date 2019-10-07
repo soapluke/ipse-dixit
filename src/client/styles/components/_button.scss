@@ -1,14 +1,31 @@
 .button {
-    background-color: $blue;
-    color: $off-white;
+    background-color: white;
+    color: $blue;
     display: inline-block;
     text-decoration: none;
-    font-size: $font-size-small;
+    text-align: center;
+    font-size: $font-size-medium;
     font-weight: 300;
     line-height: 1;
     border: none;
-    font-family: 'Ubuntu', sans-serif;
+    font: inherit;
+    cursor: pointer;
     &:focus {
         outline:0;
-    }
+    };
+    &:hover {
+        color: darken($blue, 20%);
+    };
+}
+
+.button-register {
+    background-color: $blue;
+    color: white;
+    border-radius: 5px;
+    margin-top: $s-size;
+    padding: 10px 20px;
+    font-size: $s-size;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
 }

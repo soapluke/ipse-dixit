@@ -1,0 +1,19 @@
+.register__form input {
+    padding: $s-size;
+    margin: $m-size 0 0 0;
+}
+
+.register__title {
+    color: $blue;
+    margin-bottom: 0px;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.error-msg {
+    margin-top: 5px;
+    padding: 0;
+}
+

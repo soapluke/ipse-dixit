@@ -1,6 +1,6 @@
 const express = require('express');
 const uuid = require('uuid');
-const User = require('../db/sequelize');
+const { User } = require('../db/sequelize');
 const auth = require('../middleware/auth')
 
 const router = express.Router()
@@ -17,6 +17,7 @@ router.post('/users/create', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         res.status(400).send()
+        console.log(error)
     }
 });
 
