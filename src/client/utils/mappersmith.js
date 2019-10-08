@@ -7,10 +7,8 @@ const client = forge({
     resources: {
       User: {
         create: { method: 'post', path: '/users/create' },
-   
-        // {id} is a dynamic segment and will be replaced by the parameter "id"
-        // when called
-        byId: { path: '/users/{id}' },
+        login: { method: 'post', path: '/users/login' },
+        logout: { method: 'post', path: '/users/logout' }
       },
       Post: {
         // The HTTP method can be configured through the `method` key, and a default

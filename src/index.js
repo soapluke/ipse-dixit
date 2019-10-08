@@ -4,11 +4,9 @@ import AppRouter from '../src/client/routers/AppRouter';
 import '../src/client/styles/styles.scss';
 import * as serviceWorker from './serviceWorker';
 
-const App = () => {
-    return (
-        <AppRouter />
-    );
-}
+const App = () => (
+    <AppRouter />
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

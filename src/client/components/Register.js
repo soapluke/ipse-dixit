@@ -1,26 +1,30 @@
 import React from 'react';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { history } from '../routers/AppRouter';
 import client from '../utils/mappersmith';
+
+
+const registerValidation = Yup.object().shape({
+    username: Yup.string()
+        .min(3, 'Username must be at least 3 characters.')
+        .required('Username is required!'),
+    email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required!'),
+    password: Yup.string()
+        .min(7, 'Password must be at least 7 characters.')
+        .required('Password is required!'),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match.')
+});
 
 const Register = () => (
     <div className="content-container-s">
-        <h2 className="register__title">Register account</h2>
+        <h2>Register account</h2>
         <Formik
             initialValues={{username: '', email: '', password: '', confirmPassword: '' }}
-            validationSchema={Yup.object().shape({
-                username: Yup.string()
-                    .min(3, 'Username must be at least 3 characters.')
-                    .required('Username is required!'),
-                email: Yup.string()
-                    .email('Invalid email address')
-                    .required('Email is required!'),
-                password: Yup.string()
-                    .min(7, 'Password must be at least 7 characters.')
-                    .required('Password is required!'),
-                confirmPassword: Yup.string()
-                    .oneOf([Yup.ref('password'), null], 'Passwords must match.')
-            })}
+            validationSchema={registerValidation}
             onSubmit={ async (values, actions) => {
                 try {
                     await client.User.create({
@@ -30,11 +34,12 @@ const Register = () => (
                             password: values.password
                         }
                     })
+                    history.push('/registered');
                 } catch (error) {
                     console.log(JSON.parse(error.responseData));
                     let errorString = JSON.parse(error.responseData).errors[0].message
                     actions.setStatus({
-                        username: errorString.includes('username') ? 'Username must be uniqe.' : '',
+                        username: errorString.includes('username') ? 'This username already exists.' : '',
                         email: errorString.includes('email') ? 'This email already exists.' : '',
                         password: errorString.includes('password') ? errorString : '',
                     });
@@ -52,7 +57,7 @@ const Register = () => (
             handleSubmit,
             isSubmitting
         }) => (
-            <form className="register__form" onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
                 <input
                     type="username"
                     name="username"
@@ -64,11 +69,14 @@ const Register = () => (
                         errors.username && touched.username ? 'error' : ''
                     }
                 />
-                {status && status.username ? (
-                    <div className="error-msg">{status.username}</div>
-                  ) : (
-                    errors.username && <div className="error-msg">{errors.username}</div>
-                )}
+                {
+                    (() => {
+                        if (status && status.username)
+                           return <div className="error-msg">{status.username}</div>
+                        if (errors.username && touched.username)
+                           return <div className="error-msg">{errors.username}</div>
+                    })()
+                 }
                 <input
                     type="email"
                     name="email"
@@ -80,11 +88,14 @@ const Register = () => (
                         errors.email && touched.email ? 'error' : ''
                     }
                 />
-                {status && status.email ? (
-                    <div className="error-msg">{status.email}</div>
-                  ) : (
-                    errors.email && <div className="error-msg">{errors.email}</div>
-                )}
+                {
+                    (() => {
+                        if (status && status.email)
+                           return <div className="error-msg">{status.email}</div>
+                        if (errors.email && touched.email)
+                           return <div className="error-msg">{errors.email}</div>
+                    })()
+                 }
                 <input
                     type="password"
                     name="password"
@@ -96,11 +107,14 @@ const Register = () => (
                         errors.password && touched.password ? 'error' : ''
                     }
                 />
-                {status && status.password ? (
-                    <div className="error-msg">{status.password}</div>
-                  ) : (
-                    errors.password && <div className="error-msg">{errors.password}</div>
-                )}
+                {
+                    (() => {
+                        if (status && status.password)
+                           return <div className="error-msg">{status.password}</div>
+                        if (errors.password && touched.password)
+                           return <div className="error-msg">{errors.password}</div>
+                    })()
+                }
                 <input
                     type="password"
                     name="confirmPassword"
@@ -112,8 +126,15 @@ const Register = () => (
                         errors.confirmPassword && touched.confirmPassword ? 'error' : ''
                     }
                 />
-                <ErrorMessage name="confirmPassword" render={msg => <div className="error-msg">{msg}</div>} />
-                <button className="button button-register" type="submit" disabled={isSubmitting}>
+                {
+                    (() => {
+                        if (status && status.confirmPassword)
+                           return <div className="error-msg">{status.confirmPassword}</div>
+                        if (errors.confirmPassword && touched.confirmPassword)
+                           return <div className="error-msg">{errors.confirmPassword}</div>
+                    })()
+                }
+                <button className="button button-blue" type="submit">
                     Submit
                 </button>
             </form>

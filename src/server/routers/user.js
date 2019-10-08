@@ -18,7 +18,6 @@ router.post('/users/create', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         res.status(400).send(error)
-        console.log(error)
     }
 });
 
@@ -29,7 +28,8 @@ router.post('/users/login', async (req, res) => {
         const token = await User.generateAuthToken(req.body.username);
         res.status(201).send({msg: 'Logged in successfully!', token })
     } catch (error) {
-        res.status(400).send()
+        console.log(error)
+        res.status(400).send({msg: 'Unable to login'})
     }
 });
 
