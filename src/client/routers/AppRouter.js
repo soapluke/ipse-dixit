@@ -3,6 +3,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { AuthProvider } from '../context/AuthContext';
 import PrivateRoute from '../routers/PrivateRoute';
+import PublicRoute from '../routers/PublicRoute';
 import Header from '../components/Header';
 import Register from '../components/Register';
 import RegisterSuccess from '../components/RegisterSuccess';
@@ -17,9 +18,9 @@ const AppRouter = () => (
         <AuthProvider>
             <Header />
             <Switch>
-                <Route path="/register" component={Register} />
-                <Route path="/registered" component={RegisterSuccess} />
-                <Route path="/login" component={Login} />
+                <PublicRoute path="/register" component={Register} />
+                <PublicRoute path="/registered" component={RegisterSuccess} />
+                <PublicRoute path="/login" component={Login} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
             </Switch>
         </AuthProvider>
