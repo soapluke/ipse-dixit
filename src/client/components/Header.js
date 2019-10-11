@@ -15,6 +15,7 @@ const Header = () => (
                     {
                         isAuth ? (
                             <Fragment>
+                                
                                 <Link to="/profile">
                                     <button className="button">Profile</button>
                                 </Link>
