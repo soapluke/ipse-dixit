@@ -12,6 +12,7 @@ const client = forge({
       },
       Post: {
         create: { method: 'post', path: '/posts/create' },
+        findAllByUserId: { method: 'get', path: '/posts/{userId}' }
       }
     }
   })

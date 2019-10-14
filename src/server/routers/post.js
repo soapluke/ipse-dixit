@@ -23,7 +23,7 @@ router.post('/posts/create', auth, async (req, res) => {
 // Get all posts by userId
 router.get('/posts/:userId', async (req, res) => {
     const userId = req.params.userId;
-
+    console.log(req.params)
     try {
         const posts = await Post.findAll({
             where: { userId }

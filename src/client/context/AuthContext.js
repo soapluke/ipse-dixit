@@ -14,7 +14,6 @@ const AuthProvider = (props) => {
     });
 
     const login = ({ id, email, username }) => {
-        console.log(id, email, username);
         setAuth(true)
         setCredentials({
             id,
@@ -54,4 +53,4 @@ const AuthProvider = (props) => {
 
 const AuthConsumer = AuthContext.Consumer
 
-export { AuthProvider, AuthConsumer }
+export { AuthContext, AuthProvider, AuthConsumer }

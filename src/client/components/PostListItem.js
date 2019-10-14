@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const PostListItem = ({ title, body, createdAt }) => {
     return (
-        <div className="content-container-s">
-            <h2>{title}</h2>
+        <Fragment>
+            <h3>{title}</h3>
             <p>{body}</p>
             <p>{createdAt}</p>
-        </div>
+        </Fragment>
     );
 }
 

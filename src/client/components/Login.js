@@ -22,7 +22,6 @@ const Login = () => (
                         });
                         const token = JSON.parse(user.responseData).token;
                         const credentials = JSON.parse(user.responseData).user;
-                        console.log(credentials);
                         localStorage.setItem('jwt', token);
                         login(credentials);
                         history.push('/dashboard');
