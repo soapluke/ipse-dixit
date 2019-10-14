@@ -7,19 +7,34 @@ const AuthContext = React.createContext()
 const AuthProvider = (props) => {
 
     const [auth, setAuth] = useState(false);
+    const [credentials, setCredentials] = useState({
+        id: '',
+        email: '',
+        username: ''
+    });
 
-    const login = () => {
+    const login = ({ id, email, username }) => {
+        console.log(id, email, username);
         setAuth(true)
+        setCredentials({
+            id,
+            email,
+            username
+        });
     }
     
     const logout = () => {
         let token = localStorage.getItem('jwt');
-        console.log(token)
         client.User.logout({
             headers: { Authorization: `Bearer ${token}` }
         })
         localStorage.clear();
         setAuth(false);
+        setCredentials({
+            id: '',
+            email: '',
+            username: ''
+        });
         history.push('/login');
     }
 
@@ -27,6 +42,7 @@ const AuthProvider = (props) => {
         <AuthContext.Provider
             value={{
             isAuth: auth,
+            currentCredentials: credentials,
             login,
             logout
             }}

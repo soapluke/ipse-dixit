@@ -21,21 +21,20 @@ const CreatePost = () => (
             validationSchema={registerValidation}
             onSubmit={ async (values, actions) => {
                 try {
-                    await client.User.create({
+                    let token = localStorage.getItem('jwt');
+                    await client.Post.create({
                         body: {
-                            username: values.username,
-                            email: values.email,
-                            password: values.password
-                        }
-                    })
-                    history.push('/registered');
+                            title: values.title,
+                            postBody: values.postBody
+                        },
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    history.push('/dashboard');
                 } catch (error) {
-                    console.log(JSON.parse(error.responseData));
-                    let errorString = JSON.parse(error.responseData).errors[0].message
+                    console.log(error);
+                    let errorString = JSON.parse(error.responseData).error;
                     actions.setStatus({
-                        username: errorString.includes('username') ? 'This username already exists.' : '',
-                        email: errorString.includes('email') ? 'This email already exists.' : '',
-                        password: errorString.includes('password') ? errorString : '',
+                        postBody: errorString
                     });
                 }
                 

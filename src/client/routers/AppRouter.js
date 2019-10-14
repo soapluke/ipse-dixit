@@ -11,6 +11,7 @@ import Login from '../components/Login';
 import Dashboard from '../components/Dashboard';
 import CreatePost from '../components/CreatePost';
 import NotFound from '../components/NotFound';
+import ProfilePage from '../components/ProfilePage';
 
 
 export const history = createHistory();
@@ -24,7 +25,8 @@ const AppRouter = () => (
                 <PublicRoute path="/registered" component={RegisterSuccess} />
                 <PublicRoute path="/login" component={Login} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
-                <PublicRoute path="/new" component={CreatePost} />
+                <PrivateRoute path="/new" component={CreatePost} />
+                <PrivateRoute path="/profile" component={ProfilePage} />
                 <Route component={NotFound}/>
             </Switch>
         </AuthProvider>
