@@ -1,0 +1,11 @@
+.list__item {
+    margin-top: $mini-size;
+    padding: $mini-size;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.15);
+}
+
+.list__subtitle {
+    font-size: 10px;
+    margin: 0;
+}

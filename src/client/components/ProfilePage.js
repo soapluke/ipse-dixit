@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext, AuthConsumer } from '../context/AuthContext';
-import client from '../utils/mappersmith';
+import React from 'react';
+import { AuthConsumer } from '../context/AuthContext';
 import ProfilePageCard from '../components/ProfilePageCard';
 import PostList from '../components/PostList';
 
